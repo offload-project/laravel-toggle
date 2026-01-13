@@ -1,0 +1,63 @@
+{
+  "name": "offload-project/laravel-toggle",
+  "description": "A simple and flexible feature toggle (feature flag) package for Laravel",
+  "keywords": ["laravel", "feature-flags", "feature-toggles", "toggles", "flags"],
+  "homepage": "https://github.com/offload-project/laravel-toggle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Offload Project"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "illuminate/contracts": "^11.0|^12.0",
+    "illuminate/database": "^11.0|^12.0",
+    "illuminate/support": "^11.0|^12.0"
+  },
+  "require-dev": {
+    "captainhook/captainhook-phar": "^5.27",
+    "larastan/larastan": "^3.8.1",
+    "laravel/pint": "^1.26.0",
+    "orchestra/testbench": "^9.0|^10.8.0",
+    "pestphp/pest": "^3.0|^4.0",
+    "pestphp/pest-plugin-laravel": "^3.0|^4.0",
+    "ramsey/conventional-commits": "^1.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "OffloadProject\\Toggle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "OffloadProject\\Toggle\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "pest",
+    "test-coverage": "pest --coverage",
+    "analyse": "phpstan analyse --memory-limit=-1",
+    "analyse-baseline": "phpstan analyse --memory-limit=-1 --generate-baseline",
+    "pint": "vendor/bin/pint"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "OffloadProject\\Toggle\\ToggleServiceProvider"
+      ],
+      "aliases": {
+        "Toggle": "OffloadProject\\Toggle\\Facades\\Toggle"
+      }
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "captainhook/captainhook-phar": true,
+      "pestphp/pest-plugin": true
+    },
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
