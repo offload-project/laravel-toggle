@@ -41,10 +41,12 @@ class ToggleManager
                     fn () => $this->resolve($key)
                 );
             } catch (Throwable $exception) {
-                // Rethrow non-cache-related exceptions so that genuine bugs are not masked.
-                if ($exception instanceof ToggleNotFoundException || $exception instanceof RuntimeException) {
+                // Rethrow toggle-specific exceptions so that genuine bugs are not masked.
+                if ($exception instanceof ToggleNotFoundException) {
                     throw $exception;
                 }
+                // Other exceptions (QueryException, PDOException, etc.) indicate cache
+                // unavailability - fall through to resolve without cache
             }
         }
 

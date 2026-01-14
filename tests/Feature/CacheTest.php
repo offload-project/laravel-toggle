@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Cache;
 use OffloadProject\Toggle\Facades\Toggle;
 
@@ -41,9 +42,10 @@ it('can flush all toggle caches', function () {
 });
 
 it('gracefully handles cache unavailability during active check', function () {
-    // Mock cache to throw an exception (simulating database not existing)
+    // Mock cache to throw a QueryException (simulating database not existing)
+    $exception = new QueryException('sqlite', 'select * from cache', [], new Exception('Database does not exist'));
     Cache::shouldReceive('store')
-        ->andThrow(new RuntimeException('Database does not exist'));
+        ->andThrow($exception);
 
     // Should still resolve the toggle without cache
     expect(Toggle::active('test-flag'))->toBeTrue();
@@ -51,16 +53,18 @@ it('gracefully handles cache unavailability during active check', function () {
 });
 
 it('gracefully handles cache unavailability during forgetCache', function () {
+    $exception = new QueryException('sqlite', 'select * from cache', [], new Exception('Database does not exist'));
     Cache::shouldReceive('store')
-        ->andThrow(new RuntimeException('Database does not exist'));
+        ->andThrow($exception);
 
     // Should return false but not throw
     expect(Toggle::forgetCache('test-flag'))->toBeFalse();
 });
 
 it('gracefully handles cache unavailability during flushCache', function () {
+    $exception = new QueryException('sqlite', 'select * from cache', [], new Exception('Database does not exist'));
     Cache::shouldReceive('store')
-        ->andThrow(new RuntimeException('Database does not exist'));
+        ->andThrow($exception);
 
     // Should return false but not throw
     expect(Toggle::flushCache())->toBeFalse();
