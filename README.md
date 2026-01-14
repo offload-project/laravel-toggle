@@ -206,7 +206,7 @@ All toggles will be available as the `flags` prop in your frontend:
 // Vue/React
 const { flags } = usePage().props
 
-if (flags['new-checkout']) {
+if (flags.newCheckout) {
     // Show new checkout
 }
 ```
