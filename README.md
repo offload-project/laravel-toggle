@@ -6,7 +6,8 @@
 
 # Laravel Toggle
 
-A simple and flexible feature toggle (feature flag) package for Laravel. Control feature rollouts with config-based flags, database-driven toggles, or both.
+A simple and flexible feature toggle (feature flag) package for Laravel. Control feature rollouts with config-based
+flags, database-driven toggles, or both.
 
 ## Features
 
@@ -20,7 +21,9 @@ A simple and flexible feature toggle (feature flag) package for Laravel. Control
 
 ## Why Laravel Toggle?
 
-Laravel has a built-in feature flag system ([Pennant](https://laravel.com/docs/pennant)), but it's designed for user-segmented rollouts and A/B testing. Laravel Toggle is simpler — it's for global on/off switches controlled by environment variables or database records, with no user resolution or driver complexity.
+Laravel's first-party [Pennant](https://github.com/laravel/pennant) package is designed for user-segmented rollouts and
+A/B testing. Laravel Toggle is simpler — it's for global on/off switches controlled by environment variables or database
+records, with no user resolution or driver complexity.
 
 ## Requirements
 
@@ -96,7 +99,8 @@ TOGGLE_DRIVER=database # Read-write, falls back to config
 
 The **config driver** is read-only at runtime - values come from environment variables and config files.
 
-The **database driver** checks the database first, then falls back to config values. This allows you to define defaults in config while overriding specific toggles at runtime.
+The **database driver** checks the database first, then falls back to config values. This allows you to define defaults
+in config while overriding specific toggles at runtime.
 
 ### Default behavior for undefined toggles
 
@@ -206,6 +210,7 @@ php artisan toggle:create new-feature --active --db
 ```
 
 This command will:
+
 - Add the flag to `config/toggle.php`
 - Add the environment variable to `.env`
 - Optionally create a database record
