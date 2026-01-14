@@ -10,6 +10,7 @@ use Illuminate\Contracts\Cache\Repository as CacheRepository;
 use OffloadProject\Toggle\Contracts\Driver;
 use OffloadProject\Toggle\Exceptions\ToggleNotFoundException;
 use RuntimeException;
+use Throwable;
 
 class ToggleManager
 {
@@ -33,11 +34,16 @@ class ToggleManager
         $key = $this->normalizeKey($name);
 
         if ($this->cacheEnabled()) {
-            return $this->getCache()->remember(
-                $this->cacheKey($key),
-                $this->cacheTtl(),
-                fn () => $this->resolve($key)
-            );
+            try {
+                return $this->getCache()->remember(
+                    $this->cacheKey($key),
+                    $this->cacheTtl(),
+                    fn () => $this->resolve($key)
+                );
+            } catch (Throwable) {
+                // Cache unavailable (e.g., database doesn't exist yet during boot)
+                // Fall through to resolve without cache
+            }
         }
 
         return $this->resolve($key);
@@ -113,7 +119,12 @@ class ToggleManager
     {
         $key = $this->normalizeKey($name);
 
-        return $this->getCache()->forget($this->cacheKey($key));
+        try {
+            return $this->getCache()->forget($this->cacheKey($key));
+        } catch (Throwable) {
+            // Cache unavailable
+            return false;
+        }
     }
 
     /**
@@ -121,14 +132,19 @@ class ToggleManager
      */
     public function flushCache(): bool
     {
-        $cache = $this->getCache();
+        try {
+            $cache = $this->getCache();
 
-        // Clear all known toggles from cache
-        foreach ($this->getDriver()->all() as $name => $value) {
-            $cache->forget($this->cacheKey($name));
+            // Clear all known toggles from cache
+            foreach ($this->getDriver()->all() as $name => $value) {
+                $cache->forget($this->cacheKey($name));
+            }
+
+            return true;
+        } catch (Throwable) {
+            // Cache unavailable
+            return false;
         }
-
-        return true;
     }
 
     /**
