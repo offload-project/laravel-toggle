@@ -186,6 +186,31 @@ Toggle::updateOrCreate(
 
 The model automatically clears the cache when toggles are saved or deleted.
 
+### Inertia
+
+Share all toggles with your frontend by using the provided Inertia middleware. Replace your `HandleInertiaRequests` middleware in `bootstrap/app.php`:
+
+```php
+use OffloadProject\Toggle\Middleware\ShareTogglesWithInertia;
+
+->withMiddleware(function (Middleware $middleware) {
+    $middleware->web(append: [
+        ShareTogglesWithInertia::class,
+    ]);
+})
+```
+
+All toggles will be available as the `flags` prop in your frontend:
+
+```js
+// Vue/React
+const { flags } = usePage().props
+
+if (flags['new-checkout']) {
+    // Show new checkout
+}
+```
+
 ## Artisan Commands
 
 ### List all toggles
