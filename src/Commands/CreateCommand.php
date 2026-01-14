@@ -9,6 +9,7 @@ use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Filesystem\Filesystem;
 use OffloadProject\Toggle\Models\Toggle;
+
 use function Laravel\Prompts\error;
 use function Laravel\Prompts\info;
 use function Laravel\Prompts\warning;
@@ -24,8 +25,7 @@ class CreateCommand extends Command
 
     public function __construct(
         protected Filesystem $files,
-    )
-    {
+    ) {
         parent::__construct();
     }
 
@@ -33,8 +33,8 @@ class CreateCommand extends Command
     {
         /** @var string $name */
         $name = $this->argument('name');
-        $active = (bool)$this->option('active');
-        $createDb = (bool)$this->option('db');
+        $active = (bool) $this->option('active');
+        $createDb = (bool) $this->option('db');
 
         $envKey = $this->generateEnvKey($name);
 
@@ -57,14 +57,14 @@ class CreateCommand extends Command
 
     protected function generateEnvKey(string $name): string
     {
-        return 'TOGGLE_' . strtoupper(str_replace('-', '_', $name));
+        return 'TOGGLE_'.strtoupper(str_replace('-', '_', $name));
     }
 
     protected function updateConfigFile(string $name, string $envKey, bool $active): bool
     {
         $configPath = config_path('toggle.php');
 
-        if (!$this->files->exists($configPath)) {
+        if (! $this->files->exists($configPath)) {
             warning('Config file not found. Please publish it first:');
             info('php artisan vendor:publish --tag=toggle-config');
 
@@ -92,7 +92,7 @@ class CreateCommand extends Command
         // Find the flags array and insert the new entry
         $pattern = "/('flags'\s*=>\s*\[)([^]]*?)(\s*],)/s";
 
-        if (!preg_match($pattern, $content, $matches)) {
+        if (! preg_match($pattern, $content, $matches)) {
             $this->showManualInstructions($name, $envKey, $active);
 
             return false;
@@ -126,7 +126,7 @@ class CreateCommand extends Command
     {
         $envPath = base_path('.env');
 
-        if (!$this->files->exists($envPath)) {
+        if (! $this->files->exists($envPath)) {
             return false;
         }
 
@@ -146,7 +146,7 @@ class CreateCommand extends Command
         $value = $active ? 'true' : 'false';
 
         // Add to end of file
-        $content = rtrim($content) . "\n{$envKey}={$value}\n";
+        $content = rtrim($content)."\n{$envKey}={$value}\n";
 
         $this->files->put($envPath, $content);
 
@@ -184,12 +184,11 @@ class CreateCommand extends Command
     protected function showSummary(
         string $name,
         string $envKey,
-        bool   $active,
-        bool   $configUpdated,
-        bool   $envUpdated,
-        bool   $createDb,
-    ): void
-    {
+        bool $active,
+        bool $configUpdated,
+        bool $envUpdated,
+        bool $createDb,
+    ): void {
         info("Toggle '{$name}' created!");
 
         if ($configUpdated) {
