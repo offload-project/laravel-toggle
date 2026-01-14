@@ -1,7 +1,13 @@
 {
   "name": "offload-project/laravel-toggle",
   "description": "A simple and flexible feature toggle (feature flag) package for Laravel",
-  "keywords": ["laravel", "feature-flags", "feature-toggles", "toggles", "flags"],
+  "keywords": [
+    "laravel",
+    "feature-flags",
+    "feature-toggles",
+    "toggles",
+    "flags"
+  ],
   "homepage": "https://github.com/offload-project/laravel-toggle",
   "license": "MIT",
   "authors": [
