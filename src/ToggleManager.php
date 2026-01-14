@@ -40,9 +40,11 @@ class ToggleManager
                     $this->cacheTtl(),
                     fn () => $this->resolve($key)
                 );
-            } catch (Throwable) {
-                // Cache unavailable (e.g., database doesn't exist yet during boot)
-                // Fall through to resolve without cache
+            } catch (Throwable $exception) {
+                // Rethrow non-cache-related exceptions so that genuine bugs are not masked.
+                if ($exception instanceof ToggleNotFoundException || $exception instanceof RuntimeException) {
+                    throw $exception;
+                }
             }
         }
 
