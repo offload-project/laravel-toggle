@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/offload-project/laravel-toggle/compare/v1.1.0...v1.2.0) (2026-01-14)
+
+
+### Features
+
+* camel-case feature names in inertia middleware ([0458201](https://github.com/offload-project/laravel-toggle/commit/0458201d17a9a4da84e23bd1d8de03f6577a7130))
+
 ## [1.1.0](https://github.com/offload-project/laravel-toggle/compare/v1.0.0...v1.1.0) (2026-01-14)
 
 
