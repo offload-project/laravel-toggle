@@ -136,11 +136,13 @@ class ToggleManager
      */
     public function flushCache(): bool
     {
+        // Get toggles from driver first (let driver exceptions propagate)
+        $toggles = $this->getDriver()->all();
+
         try {
             $cache = $this->getCache();
 
-            // Clear all known toggles from cache
-            foreach ($this->getDriver()->all() as $name => $value) {
+            foreach ($toggles as $name => $value) {
                 $cache->forget($this->cacheKey($name));
             }
 
