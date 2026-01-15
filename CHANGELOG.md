@@ -1,5 +1,15 @@
 # Changelog
 
+## [1.2.1](https://github.com/offload-project/laravel-toggle/compare/v1.2.0...v1.2.1) (2026-01-15)
+
+
+### Bug Fixes
+
+* catch cache error when cache is unavailable ([e41597f](https://github.com/offload-project/laravel-toggle/commit/e41597f5c21eaa571401fa194fd564ecae9dce41))
+* check for specific exceptions ([da9d0a8](https://github.com/offload-project/laravel-toggle/commit/da9d0a8130a630206ed52231b2fbcb3fe00f407b))
+* check for specific exceptions ([f9269c3](https://github.com/offload-project/laravel-toggle/commit/f9269c3d06eae7e276f4588c4a886354581e547b))
+* pr comments ([dfc60f9](https://github.com/offload-project/laravel-toggle/commit/dfc60f9956a2a54884ee177ed42f4614ad72df58))
+
 ## [1.2.0](https://github.com/offload-project/laravel-toggle/compare/v1.1.0...v1.2.0) (2026-01-14)
 
 
