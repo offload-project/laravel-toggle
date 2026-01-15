@@ -42,9 +42,13 @@ it('can flush all toggle caches', function () {
 });
 
 it('gracefully handles cache unavailability during active check', function () {
+    // Verify caching is enabled for this test
+    expect(config('toggle.cache.enabled'))->toBeTrue();
+
     // Mock cache to throw a QueryException (simulating database not existing)
     $exception = new QueryException('sqlite', 'select * from cache', [], new Exception('Database does not exist'));
     Cache::shouldReceive('store')
+        ->atLeast()->once()
         ->andThrow($exception);
 
     // Should still resolve the toggle without cache
@@ -55,6 +59,7 @@ it('gracefully handles cache unavailability during active check', function () {
 it('gracefully handles cache unavailability during forgetCache', function () {
     $exception = new QueryException('sqlite', 'select * from cache', [], new Exception('Database does not exist'));
     Cache::shouldReceive('store')
+        ->once()
         ->andThrow($exception);
 
     // Should return false but not throw
@@ -64,6 +69,7 @@ it('gracefully handles cache unavailability during forgetCache', function () {
 it('gracefully handles cache unavailability during flushCache', function () {
     $exception = new QueryException('sqlite', 'select * from cache', [], new Exception('Database does not exist'));
     Cache::shouldReceive('store')
+        ->once()
         ->andThrow($exception);
 
     // Should return false but not throw
