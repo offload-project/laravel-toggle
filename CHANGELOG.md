@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/offload-project/laravel-toggle/compare/v1.2.1...v1.3.0) (2026-03-31)
+
+
+### Features
+
+* add Laravel 13 support ([cfba22b](https://github.com/offload-project/laravel-toggle/commit/cfba22be66ab4f8cc91bf7649ec172db82069269))
+
 ## [1.2.1](https://github.com/offload-project/laravel-toggle/compare/v1.2.0...v1.2.1) (2026-01-15)
 
 
