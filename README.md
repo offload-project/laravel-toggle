@@ -28,7 +28,7 @@ records, with no user resolution or driver complexity.
 ## Requirements
 
 - PHP 8.2+
-- Laravel 11 or 12
+- Laravel 11 or 12 or 13
 
 ## Installation
 
@@ -188,7 +188,8 @@ The model automatically clears the cache when toggles are saved or deleted.
 
 ### Inertia
 
-Share all toggles with your frontend by using the provided Inertia middleware. Replace your `HandleInertiaRequests` middleware in `bootstrap/app.php`:
+Share all toggles with your frontend by using the provided Inertia middleware. Replace your `HandleInertiaRequests`
+middleware in `bootstrap/app.php`:
 
 ```php
 use OffloadProject\Toggle\Middleware\ShareTogglesWithInertia;
@@ -204,7 +205,7 @@ All toggles will be available as the `flags` prop in your frontend:
 
 ```js
 // Vue/React
-const { flags } = usePage().props
+const {flags} = usePage().props
 
 if (flags.newCheckout) {
     // Show new checkout
