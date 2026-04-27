@@ -118,7 +118,7 @@ in `database_flags`:
 ],
 
 'database_flags' => [
-    // Database-driven, mutable at runtime via Toggle::enable()/disable()
+    // Database-driven, mutable at runtime via Toggle::enable() / Toggle::disable()
     'maintenance-banner',
     'beta-access',
 ],

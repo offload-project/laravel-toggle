@@ -64,9 +64,9 @@ return [
     | Feature Flags (Config-driven)
     |--------------------------------------------------------------------------
     |
-    | Define your config-driven feature flags here. These are read-only and
-    | resolved from your .env file. They will always use the config driver
-    | regardless of the global driver setting.
+    | Define your config-driven feature flags here. When used alongside
+    | "database_flags", these will always resolve from the config driver
+    | (read-only). Otherwise, the global "driver" setting applies.
     |
     | Example:
     |     'new-checkout' => env('TOGGLE_NEW_CHECKOUT', false),
