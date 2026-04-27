@@ -12,6 +12,7 @@ flags, database-driven toggles, or both.
 ## Features
 
 - **Two storage drivers**: Config (environment variables) or Database (runtime toggleable)
+- **Per-flag driver routing**: Mix config and database flags in the same app via `database_flags`
 - **Layered approach**: Database driver falls back to config, allowing gradual migration
 - **Built-in caching**: Configurable cache store and TTL for performance
 - **Blade directives**: `@toggle`, `@elsetoggle`, `@endtoggle` for clean templates
@@ -101,6 +102,34 @@ The **config driver** is read-only at runtime - values come from environment var
 
 The **database driver** checks the database first, then falls back to config values. This allows you to define defaults
 in config while overriding specific toggles at runtime.
+
+### Per-flag driver routing
+
+You can mix both drivers in the same application. Define config-driven flags in `flags` and list database-driven flags
+in `database_flags`:
+
+```php
+// config/toggle.php
+
+'flags' => [
+    // Config-driven, read-only — controlled by .env
+    'new-checkout' => env('TOGGLE_NEW_CHECKOUT', false),
+    'dark-mode' => env('TOGGLE_DARK_MODE', true),
+],
+
+'database_flags' => [
+    // Database-driven, mutable at runtime via Toggle::enable()/disable()
+    'maintenance-banner',
+    'beta-access',
+],
+```
+
+Resolution logic:
+- Flags in `database_flags` always use the database driver (with config fallback)
+- Flags in `flags` always use the config driver (read-only)
+- Unlisted flags use the global `driver` setting
+
+This lets you keep stable flags in `.env` while allowing runtime control over flags that need to change without a deploy.
 
 ### Default behavior for undefined toggles
 
