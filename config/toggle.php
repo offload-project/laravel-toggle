@@ -61,11 +61,12 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Feature Flags
+    | Feature Flags (Config-driven)
     |--------------------------------------------------------------------------
     |
-    | Define your feature flags here. Each flag should have a unique key
-    | and a boolean value (typically from an environment variable).
+    | Define your config-driven feature flags here. These are read-only and
+    | resolved from your .env file. They will always use the config driver
+    | regardless of the global driver setting.
     |
     | Example:
     |     'new-checkout' => env('TOGGLE_NEW_CHECKOUT', false),
@@ -74,6 +75,28 @@ return [
 
     'flags' => [
         // 'example-flag' => env('TOGGLE_EXAMPLE_FLAG', false),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Database-driven Flags
+    |--------------------------------------------------------------------------
+    |
+    | List flag names that should be resolved from the database. These flags
+    | are mutable at runtime via Toggle::enable() and Toggle::disable().
+    | If a flag is not found in the database, it will fall back to config.
+    |
+    | Flags listed here will always use the database driver regardless of the
+    | global driver setting.
+    |
+    | Example:
+    |     'maintenance-banner',
+    |     'beta-access',
+    |
+    */
+
+    'database_flags' => [
+        //
     ],
 
 ];
