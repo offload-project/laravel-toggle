@@ -1,5 +1,17 @@
 # Changelog
 
+## v2.0.0 - 2026-04-27
+
+### Added
+- Both config and db flags ([30a469b](https://github.com/offload-project/laravel-toggle/commit/30a469bd8d2f65e171642536269c032733eb2976))
+
+### Fixed
+- Pr comments addressed ([4768411](https://github.com/offload-project/laravel-toggle/commit/47684118dab1f4ebbfd533939b205b595b6b73fe))
+
+### Changed
+- Remove php 8.2 testing ([d1a6524](https://github.com/offload-project/laravel-toggle/commit/d1a6524bd6052f33b15c7109ee7e42822a9ee109))
+- Repo updates [#12](https://github.com/offload-project/laravel-toggle/pull/12)
+
 ## [1.3.0](https://github.com/offload-project/laravel-toggle/compare/v1.2.1...v1.3.0) (2026-03-31)
 
 
