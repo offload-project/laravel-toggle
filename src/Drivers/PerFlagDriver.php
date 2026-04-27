@@ -44,12 +44,13 @@ class PerFlagDriver implements Driver
     {
         $configResults = $this->configDriver->all();
         $dbResults = $this->databaseDriver->all();
+        $databaseFlagSet = $this->databaseFlagSet();
 
-        // Config flags from config driver only
         $result = [];
 
+        // Config flags from config driver only
         foreach ($this->configFlags as $flag => $value) {
-            if (! in_array($flag, $this->databaseFlags, true)) {
+            if (! isset($databaseFlagSet[$flag])) {
                 $result[$flag] = $configResults[$flag] ?? (bool) $value;
             }
         }
@@ -63,8 +64,10 @@ class PerFlagDriver implements Driver
             }
         }
 
-        // Unlisted flags from the default driver
-        $defaultAll = $this->defaultDriver->all();
+        // Unlisted flags from the default driver (reuse already-fetched results)
+        $defaultAll = ($this->defaultDriver === $this->databaseDriver)
+            ? $dbResults
+            : (($this->defaultDriver === $this->configDriver) ? $configResults : $this->defaultDriver->all());
 
         foreach ($defaultAll as $flag => $value) {
             if (! array_key_exists($flag, $result)) {
@@ -77,7 +80,7 @@ class PerFlagDriver implements Driver
 
     protected function driverFor(string $name): Driver
     {
-        if (in_array($name, $this->databaseFlags, true)) {
+        if (isset($this->databaseFlagSet()[$name])) {
             return $this->databaseDriver;
         }
 
@@ -86,5 +89,13 @@ class PerFlagDriver implements Driver
         }
 
         return $this->defaultDriver;
+    }
+
+    /**
+     * @return array<string, true>
+     */
+    protected function databaseFlagSet(): array
+    {
+        return array_fill_keys($this->databaseFlags, true);
     }
 }

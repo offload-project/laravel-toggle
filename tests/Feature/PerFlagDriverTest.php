@@ -112,11 +112,13 @@ it('all() merges results from both drivers', function () {
 });
 
 it('logs warning when flags overlap between config and database_flags', function () {
+    config(['app.debug' => true]);
+
     Log::shouldReceive('warning')
         ->once()
         ->withArgs(fn (string $message) => str_contains($message, 'shared-flag'));
 
-    // Trigger boot by re-registering the provider
+    // Trigger boot on the existing provider instance
     app()->forgetInstance(ToggleManager::class);
     app()->forgetInstance('toggle');
 

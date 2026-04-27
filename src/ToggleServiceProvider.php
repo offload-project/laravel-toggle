@@ -87,6 +87,10 @@ class ToggleServiceProvider extends ServiceProvider
 
     protected function validateFlagOverlap(): void
     {
+        if (! $this->app->hasDebugModeEnabled()) {
+            return;
+        }
+
         /** @var ConfigRepository $config */
         $config = $this->app->make(ConfigRepository::class);
 
