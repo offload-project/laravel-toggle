@@ -15,11 +15,13 @@ use OffloadProject\Toggle\Facades\Toggle as ToggleFacade;
  */
 class Toggle extends Model
 {
+    /** @var list<string> */
     protected $fillable = [
         'name',
         'active',
     ];
 
+    /** @var array<string, string> */
     protected $casts = [
         'active' => 'boolean',
     ];
