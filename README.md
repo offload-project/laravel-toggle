@@ -11,14 +11,41 @@ flags, database-driven toggles, or both.
 
 ## Features
 
-- **Two storage drivers**: Config (environment variables) or Database (runtime toggleable)
-- **Per-flag driver routing**: Mix config and database flags in the same app via `database_flags`
-- **Layered approach**: Database driver falls back to config, allowing gradual migration
-- **Built-in caching**: Configurable cache store and TTL for performance
-- **Blade directives**: `@toggle`, `@elsetoggle`, `@endtoggle` for clean templates
-- **Enum support**: Use backed enums for type-safe toggle names
-- **Artisan commands**: Scaffold new toggles and manage cache
-- **Configurable defaults**: Return false, true, or throw exceptions for undefined toggles
+- **Two storage drivers** - Config (environment variables) or Database (runtime toggleable)
+- **Per-flag driver routing** - Mix config and database flags in the same app via `database_flags`
+- **Layered approach** - Database driver falls back to config, allowing gradual migration
+- **Built-in caching** - Configurable cache store and TTL for performance
+- **Blade directives** - `@toggle`, `@elsetoggle`, `@endtoggle` for clean templates
+- **Enum support** - Use backed enums for type-safe toggle names
+- **Artisan commands** - Scaffold new toggles and manage cache
+- **Inertia integration** - Share all flags with the frontend via middleware
+- **Configurable defaults** - Return false, true, or throw exceptions for undefined toggles
+
+## Table of Contents
+
+- [Why Laravel Toggle?](#why-laravel-toggle)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+    - [Define a toggle in config](#define-a-toggle-in-config)
+    - [Check toggles in code](#check-toggles-in-code)
+    - [Use Blade directives](#use-blade-directives)
+- [Configuration](#configuration)
+    - [Driver](#driver)
+    - [Per-flag driver routing](#per-flag-driver-routing)
+    - [Default behavior for undefined toggles](#default-behavior-for-undefined-toggles)
+    - [Caching](#caching)
+- [Usage](#usage)
+    - [Facade methods](#facade-methods)
+    - [Using enums](#using-enums)
+    - [Eloquent model](#eloquent-model)
+    - [Inertia](#inertia)
+- [Artisan Commands](#artisan-commands)
+- [AI Coding Assistant Skill](#ai-coding-assistant-skill)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [Security](#security)
+- [License](#license)
 
 ## Why Laravel Toggle?
 
@@ -28,18 +55,14 @@ records, with no user resolution or driver complexity.
 
 ## Requirements
 
-- PHP 8.2+
-- Laravel 11 or 12 or 13
+- PHP 8.3+
+- Laravel 11/12/13
 
 ## Installation
 
 ```bash
 composer require offload-project/laravel-toggle
-```
 
-Publish the configuration file:
-
-```bash
 php artisan vendor:publish --tag=toggle-config
 ```
 
@@ -98,7 +121,7 @@ TOGGLE_DRIVER=config   # Read-only, uses config/toggle.php flags
 TOGGLE_DRIVER=database # Read-write, falls back to config
 ```
 
-The **config driver** is read-only at runtime - values come from environment variables and config files.
+The **config driver** is read-only at runtime — values come from environment variables and config files.
 
 The **database driver** checks the database first, then falls back to config values. This allows you to define defaults
 in config while overriding specific toggles at runtime.
@@ -125,6 +148,7 @@ in `database_flags`:
 ```
 
 Resolution logic:
+
 - Flags in `database_flags` always use the database driver (with config fallback)
 - Flags in `flags` always use the config driver (read-only)
 - Unlisted flags use the global `driver` setting
@@ -161,7 +185,7 @@ Toggle::inactive('feature-name');  // bool
 // Modify toggles (database driver only)
 Toggle::enable('feature-name');   // Enable a toggle
 Toggle::disable('feature-name');  // Disable a toggle
-Toggle::delete('feature-name');     // Remove from database
+Toggle::delete('feature-name');   // Remove from database
 
 // Get all toggles
 Toggle::all(); // ['feature-name' => true, ...]
@@ -280,12 +304,33 @@ php artisan toggle:cache-clear
 php artisan toggle:cache-clear new-feature
 ```
 
+## AI Coding Assistant Skill
+
+This package ships a [Laravel Boost](https://skills.laravel.cloud/) skill so coding assistants (Claude Code, Cursor, etc.) follow the package's conventions when generating code. Install it in your app with:
+
+```bash
+php artisan boost:add-skill offload-project/laravel-toggle
+```
+
+The skill source lives at [`skills/SKILL.md`](skills/SKILL.md).
+
 ## Testing
 
 ```bash
 composer test
 ```
 
+## Contributing
+
+Contributions are welcome! Please see the documents below before getting started.
+
+- [Contributing Guide](CONTRIBUTING.md) — setup, workflow, commit conventions, and PR process
+- [Code of Conduct](CODE_OF_CONDUCT.md) — expectations for participation in this project
+
+## Security
+
+- [Security Policy](SECURITY.md) — how to report a vulnerability privately
+
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
