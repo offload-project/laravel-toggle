@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.1.0 - 2026-06-14
+
+### Other
+- Docs/updates 614 [#15](https://github.com/offload-project/laravel-toggle/pull/15)
+
 ## v2.0.0 - 2026-04-27
 
 ### Added
